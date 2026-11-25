@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import jobRoutes from "./routes/jobs.js";
 
 dotenv.config();
 
@@ -12,6 +13,12 @@ app.use(express.json());
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
+});
+
+app.use("/api/jobs", jobRoutes);
+
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found." });
 });
 
 const PORT = process.env.PORT || 5000;
